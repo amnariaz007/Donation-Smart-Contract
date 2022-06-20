@@ -25,6 +25,12 @@ contract Donation {
         Alldonaters.pop();
     }
 
+
+    function UpdateDonation( uint256 id ,string memory name ) public payable {
+            Record[id] = donate( id, name, msg.value, msg.sender);
+            Alldonaters.push(donate(id, name, msg.value,msg.sender));
+    }
+
     function FindSpecific(uint256 id) external view returns( donate memory){
        return Record[id] ;
     }
