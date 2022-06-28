@@ -10,36 +10,32 @@ contract Donation {
         address sender;
     }
 
-    donate [] public Alldonaters;
-    mapping(uint => donate) public Record;
+    uint public countAll;
+
+    mapping(uint => donate) public AllDonators;
 
     function Donater( uint256 id ,string memory name ) public payable {
-            Record[id] = donate( id, name, msg.value, msg.sender);
-            Alldonaters.push(donate(id, name, msg.value,msg.sender));
+            AllDonators[id] = donate( id, name, msg.value, msg.sender);     
+             countAll += 1; 
     }
 
 
-    function DeleteDonation ( uint index ) public{
-        // Alldonaters.pop(donate(id, name, msg.value, msg.sender ));
-        Alldonaters[index] = Alldonaters[Alldonaters.length-1];
-        Alldonaters.pop();
+    function DeleteDonation (uint256 id ) public  {
+          AllDonators[id] = donate( id, "", 0, 0x0000000000000000000000000000000000000000);     
+           countAll -= 1; 
     }
 
-
-    function UpdateDonation( uint256 id ,string memory name ) public payable {
-            Record[id] = donate( id, name, msg.value, msg.sender);
-            Alldonaters.push(donate(id, name, msg.value,msg.sender));
+     function UpdateDonation( uint256 id ,string memory name ) public payable {
+            AllDonators[id] = donate( id, name, msg.value, msg.sender);   
     }
+
 
     function FindSpecific(uint256 id) external view returns( donate memory){
-       return Record[id] ;
+       return AllDonators[id] ;
     }
 
     
-    function CountAll () public view returns(uint) {
-        return Alldonaters.length;
-    }
+    
 
 
 }
-
